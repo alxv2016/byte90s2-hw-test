@@ -1,0 +1,9 @@
+This directory intentionally keeps only the minimum PlatformIO Unity runner.
+
+Current contents:
+- `test_runner.cpp` - placeholder Unity entrypoint for the `seeed_xiao_esp32s3_test` environment
+
+Add new tests here only when there is an active test plan to maintain them.
+
+PlatformIO unit testing docs:
+- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
