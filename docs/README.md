@@ -1,7 +1,7 @@
 # BYTE-90 Hardware Test Docs
 
-Docs for the `byte90-demo` branch: a stripped-down firmware that exercises each
-BYTE-90 peripheral in turn. Code is always the source of truth.
+Docs for `byte90-hardware-demo`, on `main`: a stripped-down firmware that
+exercises each BYTE-90 peripheral in turn. Code is always the source of truth.
 
 | If you need to… | Read |
 | --- | --- |

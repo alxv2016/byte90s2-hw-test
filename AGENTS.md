@@ -1,8 +1,9 @@
 # Repository Guidelines
 
-BYTE-90 hardware test firmware for the Seeed XIAO ESP32-S3. This branch,
-`byte90-demo`, is stripped down from `byte90-core`. It boots the DOS animation
-and startup GIF, then cycles one test per peripheral on each button click.
+BYTE-90 hardware test firmware for the Seeed XIAO ESP32-S3. This repo,
+`byte90-hardware-demo`, lives on `main` and is stripped down from `byte90-core`.
+It boots the DOS animation and startup GIF, then cycles one test per peripheral
+on each button click.
 
 **Full docs:** [`docs/README.md`](docs/README.md) routes by task.
 
@@ -31,7 +32,7 @@ memory.
 
 Both carry `references/` subdirectories with deeper material; read those on
 demand rather than up front. `gemini-live-api-dev` is also vendored but is
-irrelevant on this branch.
+irrelevant here.
 
 ---
 
@@ -92,10 +93,10 @@ Test pages have 9 body rows of 21 characters; `TestScreen` clips anything longer
 
 ---
 
-## Branch Rules
+## Relationship To byte90-core
 
-`byte90-demo` diverges from `byte90-core` on purpose: the app shell, module
-seam, portal, and most shared services are removed. Do not merge it back into
+`byte90-hardware-demo` diverges from `byte90-core` on purpose: the app shell,
+module seam, portal, and most shared services are removed. Do not merge it into
 `byte90-core` or the module branches, and do not sync those branches'
 `src/module/` rules onto it.
 

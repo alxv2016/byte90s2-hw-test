@@ -2,8 +2,8 @@
 
 **Board bring-up and hardware check firmware for the BYTE-90 interactive designer art toy**
 
-This branch, `byte90-demo`, strips the BYTE-90 firmware down to a hardware
-tester. It boots with the BYTE-90 DOS animation and startup GIF, then steps
+`byte90-hardware-demo`, on `main`, strips the BYTE-90 firmware down to a
+hardware tester. It boots with the BYTE-90 DOS animation and startup GIF, then steps
 through one test per peripheral, one button click at a time. Each test shows
 yellow **Test started**, its readings, then green **Done** or red **FAIL**.
 
@@ -25,7 +25,7 @@ Flashing custom firmware to a purchased BYTE-90 device may:
 - Create incompatibility with specific hardware revisions  
 - Lead to boot issues or device malfunction  
 
-Flashing this branch replaces the product firmware. Reflash an official
+Flashing the hardware tester replaces the product firmware. Reflash an official
 release to get normal BYTE-90 behavior back.
 
 ---
