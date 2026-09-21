@@ -10,8 +10,10 @@
 #include "DisplayColors.h"
 
 #include <WiFi.h>
+#include <esp_log.h>
 
 namespace {
+static const char* TAG = "RtcTest";
 constexpr uint32_t TICK_WINDOW_MS = 2500;
 constexpr uint32_t NTP_TIMEOUT_MS = 10000;
 // Any system time before 2024-01-01 means NTP has not synced yet.
@@ -56,6 +58,7 @@ void RtcTest::start(TestScreen& screen) {
         drawDateTime(screen, 2, now);
         _first_unix = now.unix_time;
     }
+    _context.rtc->logRegisters("test start");
     screen.setField(4, "Tick", COLOR_YELLOW, "checking...");
 }
 
@@ -92,7 +95,10 @@ HardwareTest::Result RtcTest::finishTicking(TestScreen& screen) {
         return Result::FAILED;
     }
 
+    _context.rtc->logRegisters("tick end");
     uint32_t advanced_s = now.unix_time - _first_unix;
+    ESP_LOGI(TAG, "Tick: first=%lu now=%lu", static_cast<unsigned long>(_first_unix),
+             static_cast<unsigned long>(now.unix_time));
     // 2.5 s window: expect 2-3 s of RTC advance.
     _ticking = advanced_s >= 1 && advanced_s <= 4;
     screen.setField(4, "Tick", _ticking ? COLOR_GREEN : COLOR_RED, "+%lu s / 2.5 s",

@@ -42,6 +42,7 @@ struct ClockTime {
  * - Initialize and monitor the PCF8563 RTC over I2C.
  * - Read and write RTC time.
  * - Track lost-power state without auto-setting build time.
+ * - Force Control_status_1 to normal mode on begin (TEST1, STOP, TESTC = 0).
  */
 class ClockRtc {
 public:
@@ -60,11 +61,17 @@ public:
 
     bool syncFromSystemTime();
 
+    // Logs raw control and time registers, decoded, for oscillator debugging.
+    void logRegisters(const char* label);
+
 private:
+    bool readRegisters(uint8_t start_reg, uint8_t* out, size_t len);
+    bool writeRegister(uint8_t reg, uint8_t value);
     ClockRtcState updateState();
     bool convertFromDateTime(const DateTime& dt, ClockTime* out_time);
     DateTime convertToDateTime(const ClockTime& time);
 
     RTC_PCF8563 _rtc;
+    TwoWire* _bus;
     ClockRtcState _state;
 };

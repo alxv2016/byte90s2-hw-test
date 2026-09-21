@@ -235,6 +235,7 @@ regulates into an open circuit and wastes quiescent current for no benefit.
 | `ALDO1` - `ALDO4` | Must be disabled | Not connected |
 | `BLDO1`, `BLDO2` | Must be disabled | Not connected |
 | `DLDO1`, `DLDO2` | Must be disabled | Not connected |
+| `VRTC` (RTC-LDO1) | Always on | Supplies the PCF8563 (`U7` VDD); not software-controlled |
 
 `AXP2101::begin()` disables all twelve unused rails on every boot, then clears
 low-voltage turn-off for `DCDC2`-`DCDC5` so those disabled rails cannot trip
@@ -246,6 +247,19 @@ reads `isEnableDC1()` and `getDC1Voltage()` back for a startup log line.
 
 Any change here must keep `DCDC1` as the sole enabled output. Enabling another
 rail requires a board revision that actually connects it.
+
+`VRTC` is not one of the switchable rails above. It is the AXP2101's RTC-LDO1
+output (pin 28): 1.8 V by default, ±10%, 30 mA, and it stays on while the PMIC
+is off. No register sets its voltage or turns it off, so firmware never touches
+it. The PCF8563 needs only 1.0 V to keep time but 1.8 V for I2C, so the RTC's
+I2C runs at the bottom of its supply range; a unit whose `VRTC` comes in low
+may read unreliably or drop off the bus.
+
+The RTC's crystal `X1` is an Epson FC-135 (32.768 kHz, 12.5 pF load, 70 kΩ max
+ESR) between `OSCI` and `OSCO`, with `C18` (22 pF) from `OSCI` to ground and the
+chip's internal ~25 pF on `OSCO`. `CLKOUT` (pin 7) is not connected; firmware
+leaves it at its 32.768 kHz power-on default, so a temporary 10 kΩ pull-up to
+3V3 on that pin shows whether the oscillator runs.
 
 ### Power Button And Wake
 
